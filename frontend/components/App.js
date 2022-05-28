@@ -72,6 +72,18 @@ export default function App() {
     // If something goes wrong, check the status of the response:
     // if it's a 401 the token might have gone bad, and we should redirect to login.
     // Don't forget to turn off the spinner!
+
+    setMessage('');
+    setSpinnerOn(true);
+    axiosWithAuth().get(articlesUrl)
+      .then(response => {
+        setArticles(response.data.articles);
+        setMessage(response.data.message);
+        setSpinnerOn(false);
+      })
+      .catch(error => {
+        console.error({error});
+      });
   }
 
   const postArticle = article => {

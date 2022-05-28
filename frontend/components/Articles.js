@@ -13,6 +13,7 @@ export default function Articles(props) {
 
   useEffect(() => {
     // ✨ grab the articles here, on first render only
+    props.getArticles();
   }, [])
 
   return (
@@ -20,10 +21,11 @@ export default function Articles(props) {
     // and use the articles prop to generate articles
     <div className="articles">
       <h2>Articles</h2>
-      {
-        ![].length
+      { !props.articles.length
+          // ![].length
           ? 'No articles yet'
-          : [].map(art => {
+          // : [].map(art => {
+          : props.articles.map(art => {
             return (
               <div className="article" key={art.article_id}>
                 <div>
