@@ -35,8 +35,6 @@ export default function App() {
     // using the helper above.
     if (localStorage.getItem('token')) {
       localStorage.removeItem('token');
-      // setMessage('Goodbye!');
-      // redirectToLogin();
     }
     setMessage('Goodbye!');
     redirectToLogin();
@@ -92,15 +90,54 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
+
+    setMessage('');
+    setSpinnerOn(true);
+    axiosWithAuth().post(articlesUrl, article)
+      .then(response => {
+        console.log(response);
+        // dynamically set state
+        setMessage(response.data.message);
+        setSpinnerOn(false);
+      })
+      .catch(error => {
+        console.error({error});
+      });
   }
 
-  const updateArticle = ({ article_id, article }) => {
+  const updateArticle = (article_id, article) => {
     // ✨ implement
     // You got this!
+
+    setMessage('');
+    setSpinnerOn(true);
+    axiosWithAuth().put(`/articles/${article_id}`, article)
+      .then(response => {
+        console.log(response);
+        // dynamically set state
+        setMessage(response.data.message);
+        setSpinnerOn(false);
+      })
+      .catch(error => {
+        console.error({error});
+      });
   }
 
   const deleteArticle = article_id => {
     // ✨ implement
+
+    setMessage('');
+    setSpinnerOn(true);
+    axiosWithAuth().delete(`/articles/${article_id}`)
+      .then(response => {
+        console.log(response);
+        // dynamically set state
+        setMessage(response.data.message);
+        setSpinnerOn(false);
+      })
+      .catch(error => {
+        console.error({error});
+      });
   }
 
   return (
