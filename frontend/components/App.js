@@ -34,7 +34,9 @@ export default function App() {
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
     if (localStorage.getItem('token')) {
-      return localStorage.removeItem('token')
+      localStorage.removeItem('token');
+      // setMessage('Goodbye!');
+      // redirectToLogin();
     }
     setMessage('Goodbye!');
     redirectToLogin();
@@ -52,7 +54,6 @@ export default function App() {
     setSpinnerOn(true);
     axiosWithAuth().post(loginUrl, { 'username': username, 'password': password })
       .then((response) => {
-        console.log(response);
         localStorage.setItem('token', response.data.token);
         setMessage(response.data.message);
         setSpinnerOn(false);
