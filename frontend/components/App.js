@@ -7,6 +7,7 @@ import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 
 import { axiosWithAuth } from '../axios/index'
+import { PrivateRoute } from './PrivateRoute'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -154,12 +155,15 @@ export default function App() {
         </nav>
         <Routes>
           <Route path="/" element={<LoginForm login={login}/>} />
-          <Route path="articles" element={
+          <Route path="/articles" element={
+            <PrivateRoute>
             <>
               <ArticleForm postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId}/>
               <Articles articles={articles} getArticles={getArticles} deleteArticle={deleteArticle} setCurrentArticleId={setCurrentArticleId}/>
             </>
-          } />
+            </PrivateRoute>
+          }>
+          </Route>
         </Routes>
         <footer>Bloom Institute of Technology 2022</footer>
       </div>
