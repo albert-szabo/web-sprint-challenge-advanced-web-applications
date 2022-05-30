@@ -97,7 +97,7 @@ export default function App() {
     axiosWithAuth().post(articlesUrl, article)
       .then(response => {
         console.log(response);
-        // dynamically set state
+        articles.push(article);
         setMessage(response.data.message);
         setSpinnerOn(false);
       })
@@ -158,7 +158,7 @@ export default function App() {
           <Route path="/articles" element={
             <PrivateRoute>
             <>
-              <ArticleForm postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId}/>
+              <ArticleForm postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId} currentArticle={articles.find(article => article.article_id === currentArticleId)}/>
               <Articles articles={articles} getArticles={getArticles} deleteArticle={deleteArticle} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId}/>
             </>
             </PrivateRoute>
