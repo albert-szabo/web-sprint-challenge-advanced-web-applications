@@ -97,8 +97,14 @@ export default function App() {
     axiosWithAuth().post(articlesUrl, article)
       .then(response => {
         console.log(response);
-        articles.push(response.data.article);
-        setArticles(articles);
+        // setArticles(articles.push(response.data.article));
+        setArticles(articles.map(article => {
+          if (article.article_id !== response.data.article.article_id) {
+            return article
+          } else {
+            return response.data.article
+          }
+        }));
         setMessage(response.data.message);
         setSpinnerOn(false);
       })
@@ -138,7 +144,7 @@ export default function App() {
     axiosWithAuth().delete(`/articles/${article_id}`)
       .then(response => {
         console.log(response);
-        // dynamically set state
+        setArticles(articles.filter(article => article.article_id !== article_id));
         setMessage(response.data.message);
         setSpinnerOn(false);
       })
