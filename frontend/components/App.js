@@ -97,7 +97,8 @@ export default function App() {
     axiosWithAuth().post(articlesUrl, article)
       .then(response => {
         console.log(response);
-        articles.push(article);
+        articles.push(response.data.article);
+        setArticles(articles);
         setMessage(response.data.message);
         setSpinnerOn(false);
       })
@@ -114,8 +115,13 @@ export default function App() {
     setSpinnerOn(true);
     axiosWithAuth().put(`/articles/${article_id}`, article)
       .then(response => {
-        console.log(response);
-        // dynamically set state
+        setArticles(articles.map(article => {
+          if (article.article_id === response.data.article.article_id) {
+            return response.data.article
+          } else {
+            return article
+          }
+        }));
         setMessage(response.data.message);
         setSpinnerOn(false);
       })
